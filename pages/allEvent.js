@@ -1,10 +1,13 @@
-import {getAllEvents} from "@/dummy-data"
 import PostBuilder from "@/components/postBuilder"
 import Header from "@/components/header"
+import path from "path"
+import fs from "fs/promises"
 
-function AllEvent(){
+function AllEvent(props) {
 
-    return(
+    const { data } = props
+
+    return (
         <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
             <div className="w-full">
                 <Header />
@@ -13,7 +16,7 @@ function AllEvent(){
 
                 <div className="w-full mt-6">
                     {
-                        getAllEvents().map((val) => {
+                        data.map((val) => {
                             return <div key={val.id}> <PostBuilder value={val} /> </div>
                         })
                     }
@@ -21,6 +24,22 @@ function AllEvent(){
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    const filePath = path.join(process.cwd(), "data", "db.json")
+    const jsonData = await fs.readFile(filePath)
+    const data = JSON.parse(jsonData)
+
+    return (
+        {
+            props: {
+                data: data.events
+            }
+        }
+    )
+
 }
 
 export default AllEvent

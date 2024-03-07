@@ -1,17 +1,53 @@
 import { useRouter } from "next/router"
-import {getEventById} from "@/dummy-data"
-import {PostBuilder} from "@/components/postBuilder"
+import PostBuilder from "@/components/postBuilder"
+import path from "path"
+import fs from "fs/promises"
 
-function slugList(){
+function SlugList(props) {
 
     const router = useRouter()
-    console.log(getEventById(router.query.slug))
+    const { data } = props
+    console.log(data)
 
-    return(
+    if (!data) {
+        return (<>
+            <p>No data found</p>
+        </>)
+    }
+
+    return (
+        
         <div>
-            <PostBuilder value={getEventById(router.query.slug)} />
+            <p>Post</p>
+            <PostBuilder value={data[0]} />
         </div>
     )
 }
 
-export default slugList
+export async function getServerSideProps(context) {
+
+    const {query} = context
+
+    const filePath = path.join(process.cwd(), "data", "db.json")
+    const jsonData = await fs.readFile(filePath)
+    const data = JSON.parse(jsonData)
+
+    
+    const url = query.slug
+
+    const value = data.events.filter((val) => {
+        return url && val.id === url
+    })
+
+    return (
+        {
+            props: {
+                data: value
+            }
+        }
+    )
+
+}
+
+
+export default SlugList

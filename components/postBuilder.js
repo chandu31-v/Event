@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 
-function postBuilder({ value }) {
+function PostBuilder({ value }) {
 
     const router = useRouter()
     const exploreEvent = () => {
@@ -20,11 +20,11 @@ function postBuilder({ value }) {
                 <div className="w-3/5">
                     <div className="w-full">
 
-                        <header className="w-full font-semibold">{value.title}</header>
+                        <header className="w-full font-semibold">{value?.title}</header>
                         {/* body */}
                         <div className="w-full">
-                            <p className="font-medium text-xs">{value.date}</p>
-                            <p>{value.location}</p>
+                            <p className="font-medium text-xs">{value?.date}</p>
+                            <p>{value?.location}</p>
                         </div>
                         {/* explore event */}
                         <div className="flex justify-end w-full mt-8">
@@ -44,4 +44,4 @@ function postBuilder({ value }) {
     )
 }
 
-export default postBuilder
+export default PostBuilder
