@@ -4,6 +4,7 @@ import SelectHeader from "@/components/selectHeader"
 import Header from "@/components/header"
 import path from "path"
 import fs from "fs/promises"
+import EventSignup from "@/components/eventSignup"
 
 
 function EventPage(props) {
@@ -17,6 +18,10 @@ function EventPage(props) {
             </div>
             <div className="w-full sm:w-2/5 mt-8">
 
+                <div>
+                    <EventSignup />
+                </div>
+
                 <div className="">
                     <SelectHeader />
                 </div>
@@ -29,6 +34,7 @@ function EventPage(props) {
                     }
                 </div>
             </div>
+
         </div>
     )
 }
@@ -39,7 +45,7 @@ export async function getStaticProps(context) {
     const jsonData = await fs.readFile(filePath)
     const data = JSON.parse(jsonData)
 
-    const filterData = data.events.filter((value)=>{
+    const filterData = data.events.filter((value) => {
         return value.isFeatured
     })
 
