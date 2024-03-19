@@ -1,15 +1,17 @@
-import { getFeaturedEvents } from "@/dummy-data"
+import { useContext } from "react"
 import PostBuilder from "@/components/postBuilder"
 import SelectHeader from "@/components/selectHeader"
 import Header from "@/components/header"
 import path from "path"
 import fs from "fs/promises"
 import EventSignup from "@/components/eventSignup"
-
+import Notification from "@/components/notification"
+import Context from "@/components/context/configureContext"
 
 function EventPage(props) {
 
     const { data } = props
+    const contextData = useContext(Context)
 
     return (
         <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
@@ -34,7 +36,9 @@ function EventPage(props) {
                     }
                 </div>
             </div>
-
+            {
+                contextData.notification?<Notification />:null
+            }
         </div>
     )
 }
