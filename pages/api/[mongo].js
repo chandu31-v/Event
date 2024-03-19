@@ -1,6 +1,6 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
-const uri = "mongodb+srv://dracarysdragonfire8:f3VIvpt36nPcpH3I@cluster0.tiiwfc4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const uri = String(process.env.MONGODB_URL)
 
 async function mongoData(req, res) {
 
