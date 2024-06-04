@@ -1,11 +1,12 @@
-import { useState,useContext,useEffect } from "react"
-import PostBuilder from "@/components/postBuilder"
+import { useState, useContext, useEffect } from "react"
+import PostPageBuilder from "@/components/postPageBuilder"
 import path from "path"
 import fs from "fs/promises"
 import Comments from "@/components/comment/commentBox"
 import CommentBlock from "@/components/comment/commentBlock"
 import Context from "@/components/context/configureContext"
 import Notification from "@/components/notification"
+import Header from "@/components/header"
 
 function SlugList(props) {
 
@@ -19,9 +20,9 @@ function SlugList(props) {
     //context
     const contextData = useContext(Context)
 
-    useEffect(()=>{
-        contextData.showNotification({status:status,message:"error connectiong"})
-    },[])
+    useEffect(() => {
+        contextData.showNotification({ status: status, message: "error connectiong" })
+    }, [])
 
     //const comment = JSON.parse(comments)
 
@@ -33,17 +34,22 @@ function SlugList(props) {
 
     return (
 
-        <div className="flex flex-col items-center w-full">
-            <p>Post</p>
-            <PostBuilder value={data[0]} />
-            <div className="w-1/2">
+        <div className="flex flex-col items-center max-w-screen bg-slate-400 min-h-screen">
+
+            <div className="w-full">
+                <Header />
+            </div>
+
+            <p className=" text-2xl font-bold">{data[0]?.title}</p>
+            <PostPageBuilder value={data[0]} />
+            <div className="flex justify-center w-full">
                 {
                     check ?
                         <div className="flex justify-center w-full">
                             <button className="bg-green-500 px-4 rounded" onClick={toggle}>Comment</button>
                         </div>
                         :
-                        <div className="w-full">
+                        <div className="w-1/2">
                             <Comments url={url} />
                             {comments?.map((comment) => {
                                 return <CommentBlock key={comment._id} name={comment.name} comment={comment.comment} />
@@ -76,7 +82,7 @@ export async function getServerSideProps(context) {
     })
 
     //fetch from api endpoint
-    let comments, comment, status=null
+    let comments, comment, status = null
     try {
         comments = await fetch(`http://localhost:3000/api/${url}`)
         comment = await comments.json()
@@ -85,8 +91,8 @@ export async function getServerSideProps(context) {
         }
         status = comment.status
     } catch (err) {
-        comment={
-            data:[]
+        comment = {
+            data: []
         }
     }
 

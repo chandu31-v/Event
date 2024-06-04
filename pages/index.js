@@ -14,7 +14,7 @@ function EventPage(props) {
     const contextData = useContext(Context)
 
     return (
-        <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
+        <div className="flex flex-col items-center w-screen h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>
@@ -24,15 +24,17 @@ function EventPage(props) {
                     <EventSignup />
                 </div>
 
-                <div className="">
+                <div className="bg-slate-400">
                     <SelectHeader />
                 </div>
 
                 <div className="w-full mt-6">
                     {
+                        data.length>0?
                         data.map((val) => {
                             return <div key={val.id}> <PostBuilder value={val} /> </div>
-                        })
+                        }):
+                        <div>No data found</div>
                     }
                 </div>
             </div>

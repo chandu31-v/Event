@@ -13,12 +13,12 @@ function Header() {
     }
 
     return (
-        <div className="w-full">
-            <div className="flex w-full p-4 bg-white">
+        <div className="w-full bg-slate-300">
+            <div className="flex w-full p-4">
                 {/* year */}
                 <div className="flex mr-2 w-2/5">
                     <label className="mr-2 font-semibold">Year </label>
-                    <select defaultValue="2021" ref={year} className="border-[1px] rounded w-full">
+                    <select defaultValue="2021" ref={year} className="border-[1px] rounded w-full bg-slate-100">
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
@@ -28,7 +28,7 @@ function Header() {
                 {/* month */}
                 <div className="flex w-2/5">
                     <label className="mr-2 font-semibold">Month </label>
-                    <select defaultValue="2021" ref={month} className="border-[1px] rounded w-full">
+                    <select defaultValue="2021" ref={month} className="border-[1px] rounded w-full bg-slate-100">
                         <option value="1">january</option>
                         <option value="4">april</option>
                         <option value="5">may</option>

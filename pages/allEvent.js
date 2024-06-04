@@ -8,7 +8,7 @@ function AllEvent(props) {
     const { data } = props
 
     return (
-        <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
+        <div className="flex flex-col items-center w-screen h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>

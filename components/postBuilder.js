@@ -10,10 +10,10 @@ function PostBuilder({ value }) {
     return (
         <div className="w-full">
 
-            <div className="flex flex-row p-4 m-4 rounded-lg bg-white">
+            <div className="flex flex-row p-4 m-4 rounded-lg bg-slate-300">
                 {/* image div */}
-                <div className="w-2/5">
-                    <img src={null} alt="image" />
+                <div className="w-2/5 rounded-md mx-2">
+                    <img className="rounded-md" src={value?.image} alt="image" />
                 </div>
 
                 {/* Content div */}

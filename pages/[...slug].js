@@ -2,10 +2,12 @@ import Header from "@/components/header"
 import PostBuilder from "@/components/postBuilder"
 import path from "path"
 import fs from "fs/promises"
+import { useRouter } from "next/router"
 
 function AllSlugList(props) {
 
     const { data } = props
+    const router = useRouter()
     //console.log(data)
 
     if (!data) {
@@ -14,8 +16,18 @@ function AllSlugList(props) {
         )
     }
 
+    if (data.length === 0) {
+        setTimeout(() => router.push("/"), 2000)
+        return (
+            <div className="flex flex-col max-w-screen min-h-screen justify-center items-center bg-slate-400">
+                <div>No data found!!</div>
+                <div>Redirecting to home...</div>
+            </div>
+        )
+    }
+
     return (
-        <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
+        <div className="flex flex-col items-center w-screen h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>
@@ -34,7 +46,7 @@ function AllSlugList(props) {
     )
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps({ params }) {
 
     const filePath = path.join(process.cwd(), "data", "db.json")
     const jsonData = await fs.readFile(filePath)
@@ -44,15 +56,14 @@ export async function getStaticProps({params}) {
     //console.log(slugValue)
     const slugValue = params.slug
 
-    const filteredEvents = data.events.filter((event) => {
+    let filteredEvents = data.events.filter((event) => {
         const eventDate = new Date(event.date);
         return eventDate.getFullYear() == slugValue[0] && eventDate.getMonth() == slugValue[1];
     });
 
-    //console.log(filteredEvents)
-
-    if(!filteredEvents){
-        return {notFound:true}
+    if (!filteredEvents) {
+        // return {notFound:true}
+        filteredEvents = []
     }
 
     return (
@@ -65,7 +76,7 @@ export async function getStaticProps({params}) {
 
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
 
     const year = ["2021", "2022", "2023"]
     const month = ["4", "5", "6"]
@@ -73,7 +84,7 @@ export async function getStaticPaths() {
     let allSlugValue = []
     year.map((yr) => {
         month.map((mon) => {
-            allSlugValue.push({ params: { slug: [yr,mon] } })
+            allSlugValue.push({ params: { slug: [yr, mon] } })
         })
     })
 
@@ -82,7 +93,7 @@ export async function getStaticPaths() {
     return (
         {
             paths: allSlugValue,
-            fallback: false
+            fallback: true
         }
     )
 }

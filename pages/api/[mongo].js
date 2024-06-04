@@ -30,6 +30,7 @@ async function mongoData(req, res) {
             //connect to database
             const db = client.db("event")
 
+            console.log(req.query.mongo)
             //use connected database(db) to access desired collections
             const data = await db.collection(`${req.query.mongo}`).find().toArray()
             client.close()

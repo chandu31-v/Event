@@ -34,7 +34,7 @@ function Comments({ url }) {
 
 
     return (
-        <div className="flex flex-col items-start bg-green-500 w-full p-8">
+        <div className="flex flex-col items-start bg-green-500 max-w-screen p-8">
             <div className="flex flex-row w-full">
                 <div className="mr-2 w-1/2">
                     <p>Your email</p>
@@ -47,9 +47,9 @@ function Comments({ url }) {
             </div>
             <div className="w-full">
                 <p>Your comments</p>
-                <textarea rows="4" cols="30" ref={commentRef} className="w-full"></textarea>
+                <textarea rows="4" cols="28" ref={commentRef} className="w-full"></textarea>
             </div>
-            <button onClick={addCommentFun}>Submit</button>
+            <button className="hover:bg-green-300 p-1 rounded-md border border-b-green-600" onClick={addCommentFun}>Submit</button>
         </div>
     )
 }
