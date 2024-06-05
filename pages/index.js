@@ -65,7 +65,7 @@ export async function getServerSideProps(context) {
 
     let featuredPosts
     try {
-        const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
+        const featuredPostsResponse = await fetch("http://localhost:3000/api/isFeatured")
         featuredPosts = await featuredPostsResponse.json()
     } catch (e) {
         console.log(e)

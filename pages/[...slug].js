@@ -9,7 +9,7 @@ import Header from "@/components/header"
 function AllSlugList(props) {
 
     const { data } = props
-    const router = useRouter()
+    //const router = useRouter()
     //console.log(data)
 
     if (!data) {
@@ -18,18 +18,23 @@ function AllSlugList(props) {
         )
     }
 
-    useEffect(() => {
-        if (data?.length === 0) {
-            router.push("/")
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (data?.length === 0) {
+    //         router.push("/")
+    //     }
+    // },[router])
 
     if (data?.length === 0) {
 
         return (
-            <div className="flex flex-col max-w-screen min-h-screen justify-center items-center bg-slate-400">
-                <div>No data found!!</div>
-                <div>Redirecting to home...</div>
+            <div className="flex flex-col max-w-screen min-h-screen bg-slate-400">
+                <div className="w-full">
+                    <Header />
+                </div>
+                <div className="flex justify-center items-center">
+                    <div>No data found!!</div>
+                    <div>Redirecting to home...</div>
+                </div>
             </div>
         )
     }
@@ -39,12 +44,12 @@ function AllSlugList(props) {
             <div className="w-full">
                 <Header />
             </div>
-            <div className="w-full sm:w-2/5 mt-8">
+            <div className="w-full mt-8">
 
-                <div className="w-full mt-6">
+                <div className="flex flex-wrap w-full mt-6 h-full">
                     {
-                        data?.map((val) => {
-                            return <div key={val._id}> <PostBuilder value={val} /> </div>
+                        data.map((val) => {
+                            return <div className="w-full min-[500px]:w-1/3 px-3 h-full" key={val._id}> <PostBuilder value={val} /> </div>
                         })
                     }
                 </div>
