@@ -58,7 +58,7 @@ export async function getServerSideProps(context) {
 
 
     //get data from mongoDB
-    const featuredPostsResponse = await fetch("http://localhost:3000/api/isFeatured")
+    const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
     const featuredPosts = await featuredPostsResponse.json()
 
     return (
