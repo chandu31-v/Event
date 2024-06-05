@@ -86,10 +86,14 @@ export async function getServerSideProps(context) {
     //fetch data based on id from mongo
     let postData
     try{
+        //https://event-git-main-chandrashekars-projects.vercel.app/api/${id}
+        //http://localhost:3000/api/${id}`
         const response = await fetch(`https://event-git-main-chandrashekars-projects.vercel.app/api/${id}`)
         postData = await response.json()
         if(postData===undefined){
             postData=[]
+        }else{
+            postData = postData.data
         }
 
     }catch(e){
@@ -111,10 +115,12 @@ export async function getServerSideProps(context) {
     //     }
     // }
 
+
+
     return (
         {
             props: {
-                data: postData.data,
+                data: postData,
                 //comments: comment.data,
                 //url: url,
                 //status

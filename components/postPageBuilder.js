@@ -7,8 +7,6 @@ function PostBuilder({ value }) {
     //     router.push(`/${value.id}`)
     // }
 
-    console.log(value?._id)
-
     return (
         <div className="w-full bg-slate-400">
             <div className="flex flex-row p-4 rounded-lg">

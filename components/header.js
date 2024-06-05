@@ -7,7 +7,7 @@ function Header(){
 
             {/* Events */}
             <div className="flex justify-center w-1/2">
-                <Link href='/' className="text-2xl">Events</Link>
+                <Link href='/' className="text-2xl">Home</Link>
             </div>
 
             {/* Browse all events */}

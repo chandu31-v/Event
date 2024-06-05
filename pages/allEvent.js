@@ -9,19 +9,16 @@ function AllEvent(props) {
     const { data } = props
 
     return (
-        <div className="flex flex-col items-center w-screen min-h-screen bg-slate-400">
+        <div className="flex flex-col max-w-screen min-h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>
-            <div className="w-full sm:w-2/5 mt-8">
-
-                <div className="w-full mt-6">
+            <div className="flex flex-wrap w-full mt-8">
                     {
                         data.map((val) => {
-                            return <div key={val._id}> <PostBuilder value={val} /> </div>
+                            return <div className="w-full min-[500px]:w-1/3 p-3" key={val._id}> <PostBuilder value={val} /> </div>
                         })
                     }
-                </div>
             </div>
         </div>
     )

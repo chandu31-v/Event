@@ -1,10 +1,10 @@
 import { useEffect } from "react"
-import Header from "@/components/header"
 import PostBuilder from "@/components/postBuilder"
 // import path from "path"
 // import fs from "fs/promises"
 import { useRouter } from "next/router"
 import { client } from "@/mongoDB/connect"
+import Header from "@/components/header"
 
 function AllSlugList(props) {
 
@@ -18,12 +18,14 @@ function AllSlugList(props) {
         )
     }
 
-    // useEffect(()=>{
-    //     setTimeout(()=>{router.push("/")}, 1000)
-    // },[data?.length===0])
+    useEffect(() => {
+        if (data?.length === 0) {
+            router.push("/")
+        }
+    }, [])
 
     if (data?.length === 0) {
-        
+
         return (
             <div className="flex flex-col max-w-screen min-h-screen justify-center items-center bg-slate-400">
                 <div>No data found!!</div>
@@ -41,7 +43,7 @@ function AllSlugList(props) {
 
                 <div className="w-full mt-6">
                     {
-                        data.map((val) => {
+                        data?.map((val) => {
                             return <div key={val._id}> <PostBuilder value={val} /> </div>
                         })
                     }

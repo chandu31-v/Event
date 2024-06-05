@@ -13,8 +13,8 @@ function PostBuilder({ value }) {
 
             <div className="flex flex-row p-4 mb-4 rounded-lg bg-slate-300">
                 {/* image div */}
-                <div className="w-2/5 rounded-md mx-2">
-                    <img className="rounded-md" src={value?.images} alt="image" />
+                <div className="w-2/5 rounded-md mx-2 max-h-44">
+                    <img className="rounded-md h-full" src={value?.images} alt="image" />
                     {/* <Image className="rounded-md" src={value?.images} width={400} height={400} alt="image" /> */}
                 </div>
 
@@ -22,7 +22,7 @@ function PostBuilder({ value }) {
                 <div className="w-3/5">
                     <div className="w-full">
 
-                        <header className="w-full font-semibold">{value?.title}</header>
+                        <header className="w-full font-semibold ">{value?.title}</header>
                         {/* body */}
                         <div className="w-full">
                             <p className="font-medium text-xs">{value?.date}</p>

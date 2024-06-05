@@ -18,28 +18,30 @@ function EventPage(props) {
             <div className="w-full">
                 <Header />
             </div>
-            <div className="w-full sm:w-2/5 mt-8">
+            <div className="w-full mt-8">
 
-                <div>
+                <div className="">
                     <EventSignup />
                 </div>
 
-                <div className="bg-slate-400">
-                    <SelectHeader />
+                <div className="flex justify-center w-full bg-slate-400">
+                    <div className="w-full min-[500px]:w-2/4">
+                        <SelectHeader />
+                    </div>
                 </div>
 
-                <div className="max-w-screen mt-6">
+                <div className="flex flex-wrap w-full mt-6 h-full">
                     {
-                        data.length>0?
-                        data.map((val) => {
-                            return <div key={val._id}> <PostBuilder value={val} /> </div>
-                        }):
-                        <div>No data found</div>
+                        data.length > 0 ?
+                            data.map((val) => {
+                                return <div className="w-full min-[500px]:w-1/3 px-3 h-full" key={val._id}> <PostBuilder value={val} /> </div>
+                            }) :
+                            <div>No data found</div>
                     }
                 </div>
             </div>
             {
-                contextData.notification?<Notification />:null
+                contextData.notification ? <Notification /> : null
             }
         </div>
     )
@@ -58,13 +60,27 @@ export async function getServerSideProps(context) {
 
 
     //get data from mongoDB
-    const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
-    const featuredPosts = await featuredPostsResponse.json()
+    //http://localhost:3000/api/isFeatured
+    //https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured
+
+    let featuredPosts
+    try {
+        const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
+        featuredPosts = await featuredPostsResponse.json()
+    } catch (e) {
+        console.log(e)
+    }
+
+    if (featuredPosts === undefined) {
+        featuredPosts = []
+    } else {
+        featuredPosts = featuredPosts.data
+    }
 
     return (
         {
             props: {
-                data: featuredPosts.data
+                data: featuredPosts
             }
         }
     )

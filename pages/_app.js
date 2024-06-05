@@ -5,7 +5,7 @@ import {ContextProvider} from '@/components/context/configureContext'
 export default function App({ Component, pageProps }) {
 
   return (
-    <div className='w-screen h-screen'>
+    <div className='max-w-screen h-screen'>
       <ContextProvider>
         <Component {...pageProps} />
       </ContextProvider>
