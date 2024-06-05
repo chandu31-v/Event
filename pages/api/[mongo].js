@@ -31,10 +31,32 @@ async function mongoData(req, res) {
             const db = client.db("event")
 
             console.log(req.query.mongo)
-            //use connected database(db) to access desired collections
-            const data = await db.collection(`${req.query.mongo}`).find().toArray()
-            client.close()
-            res.status(200).json({ status: "success",data:data, message: "Data sent successfully" })
+
+            if (req.query.mongo === "allEvents") {
+                const data = await db.collection("eventDetails").find().toArray()
+                client.close()
+                res.status(200).json({ status: "success", data: data, message: "Data sent successfully" })
+
+            }
+            else if (req.query.mongo === "isFeatured") {
+                const data = await db.collection("eventDetails").find({ "isFeatured": true }).toArray()
+                client.close()
+                res.status(200).json({ status: "success", data: data, message: "Data sent successfully" })
+            }
+            else {
+                //use connected database(db) to access desired collections
+                let split = req.query.mongo.split(",")
+                if (split.length > 1) {
+                    const data = await db.collection("eventDetails").find({ "date": `${split[0]}-0${split[1]}-12` }).toArray()
+                    client.close()
+                    res.status(200).json({ status: "success", data: data, message: "Data sent successfully" })
+                } else {
+                    const data = await db.collection("eventDetails").find({ "_id": req.query.mongo }).toArray()
+                    client.close()
+                    res.status(200).json({ status: "success", data: data, message: "Data sent successfully" })
+                }
+            }
+
 
         } catch (err) {
             console.log(err)

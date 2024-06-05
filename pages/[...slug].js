@@ -1,8 +1,10 @@
+import { useEffect } from "react"
 import Header from "@/components/header"
 import PostBuilder from "@/components/postBuilder"
-import path from "path"
-import fs from "fs/promises"
+// import path from "path"
+// import fs from "fs/promises"
 import { useRouter } from "next/router"
+import { client } from "@/mongoDB/connect"
 
 function AllSlugList(props) {
 
@@ -16,8 +18,12 @@ function AllSlugList(props) {
         )
     }
 
-    if (data.length === 0) {
-        setTimeout(() => router.push("/"), 2000)
+    // useEffect(()=>{
+    //     setTimeout(()=>{router.push("/")}, 1000)
+    // },[data?.length===0])
+
+    if (data?.length === 0) {
+        
         return (
             <div className="flex flex-col max-w-screen min-h-screen justify-center items-center bg-slate-400">
                 <div>No data found!!</div>
@@ -27,7 +33,7 @@ function AllSlugList(props) {
     }
 
     return (
-        <div className="flex flex-col items-center w-screen h-screen bg-slate-400">
+        <div className="flex flex-col items-center w-screen min-h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>
@@ -36,7 +42,7 @@ function AllSlugList(props) {
                 <div className="w-full mt-6">
                     {
                         data.map((val) => {
-                            return <div key={val.id}> <PostBuilder value={val} /> </div>
+                            return <div key={val._id}> <PostBuilder value={val} /> </div>
                         })
                     }
                 </div>
@@ -48,28 +54,58 @@ function AllSlugList(props) {
 
 export async function getStaticProps({ params }) {
 
-    const filePath = path.join(process.cwd(), "data", "db.json")
-    const jsonData = await fs.readFile(filePath)
-    const data = JSON.parse(jsonData)
+    //for local file json
+    // const filePath = path.join(process.cwd(), "data", "db.json")
+    // const jsonData = await fs.readFile(filePath)
+    // const data = JSON.parse(jsonData)
 
     //const slugValue = params[0].slug.split("/")
     //console.log(slugValue)
-    const slugValue = params.slug
 
-    let filteredEvents = data.events.filter((event) => {
-        const eventDate = new Date(event.date);
-        return eventDate.getFullYear() == slugValue[0] && eventDate.getMonth() == slugValue[1];
-    });
+    //console.log(params.slug)
+    const dateValue = params.slug
 
-    if (!filteredEvents) {
+    // let filteredEvents = data.events.filter((event) => {
+    //     const eventDate = new Date(event.date);
+    //     return eventDate.getFullYear() == slugValue[0] && eventDate.getMonth() == slugValue[1];
+    // });
+
+    //get data from mongo (should not use fetch API inside getStaticProps)
+    // let responseData
+    // try{
+    //     const response = await fetch(`http://localhost:3000/api/${dateValue}`)
+    //     responseData = await response.json()
+    // }catch(e){
+    //     console.log(e)
+    // }
+
+    //get data directly from mongoDB
+    let data
+    try {
+
+        //connect to mongo Database
+        await client.connect()
+
+        //connect to database
+        const db = await client.db("event")
+
+        //connect to desired collection
+        data = await db.collection("eventDetails").find({ "date": `${dateValue[0]}-0${dateValue[1]}-12` }).toArray()
+        client.close()
+    } catch (e) {
+        console.log(e)
+    }
+
+
+    if (!data) {
         // return {notFound:true}
-        filteredEvents = []
+        data = []
     }
 
     return (
         {
             props: {
-                data: filteredEvents
+                data: data
             }
         }
     )

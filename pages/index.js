@@ -2,8 +2,8 @@ import { useContext } from "react"
 import PostBuilder from "@/components/postBuilder"
 import SelectHeader from "@/components/selectHeader"
 import Header from "@/components/header"
-import path from "path"
-import fs from "fs/promises"
+// import path from "path"
+// import fs from "fs/promises"
 import EventSignup from "@/components/eventSignup"
 import Notification from "@/components/notification"
 import Context from "@/components/context/configureContext"
@@ -14,7 +14,7 @@ function EventPage(props) {
     const contextData = useContext(Context)
 
     return (
-        <div className="flex flex-col items-center w-screen h-screen bg-slate-400">
+        <div className="flex flex-col items-center max-w-screen min-h-screen bg-slate-400">
             <div className="w-full">
                 <Header />
             </div>
@@ -28,11 +28,11 @@ function EventPage(props) {
                     <SelectHeader />
                 </div>
 
-                <div className="w-full mt-6">
+                <div className="max-w-screen mt-6">
                     {
                         data.length>0?
                         data.map((val) => {
-                            return <div key={val.id}> <PostBuilder value={val} /> </div>
+                            return <div key={val._id}> <PostBuilder value={val} /> </div>
                         }):
                         <div>No data found</div>
                     }
@@ -45,20 +45,26 @@ function EventPage(props) {
     )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
 
-    const filePath = path.join(process.cwd(), "data", "db.json")
-    const jsonData = await fs.readFile(filePath)
-    const data = JSON.parse(jsonData)
+    //for local file
+    // const filePath = path.join(process.cwd(), "data", "db.json")
+    // const jsonData = await fs.readFile(filePath)
+    // const data = JSON.parse(jsonData)
 
-    const filterData = data.events.filter((value) => {
-        return value.isFeatured
-    })
+    // const filterData = data.events.filter((value) => {
+    //     return value.isFeatured
+    // })
+
+
+    //get data from mongoDB
+    const featuredPostsResponse = await fetch("http://localhost:3000/api/isFeatured")
+    const featuredPosts = await featuredPostsResponse.json()
 
     return (
         {
             props: {
-                data: filterData
+                data: featuredPosts.data
             }
         }
     )

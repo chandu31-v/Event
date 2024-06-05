@@ -7,13 +7,16 @@ function PostBuilder({ value }) {
     //     router.push(`/${value.id}`)
     // }
 
+    console.log(value?._id)
+
     return (
         <div className="w-full bg-slate-400">
             <div className="flex flex-row p-4 rounded-lg">
 
                 {/* image div */}
                 <div className="w-1/2 p-10">
-                    <img className="rounded-md w-full" src={value?.image} alt="image" />
+                    <img className="rounded-md w-full" src={value?.images} alt="image" />
+                    {/* <Image className="rounded-md w-full" src={value?.images} width={400} height={400} alt="image" /> */}
                 </div>
 
                 {/* Body div */}

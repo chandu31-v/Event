@@ -1,5 +1,6 @@
 import { useRef,useContext } from "react"
 import Context from "./context/configureContext"
+import Json from "../data/try.json"
 
 function EventSignup() {
 

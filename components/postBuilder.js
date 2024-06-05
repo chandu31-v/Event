@@ -1,19 +1,21 @@
 import { useRouter } from "next/router"
+import Image from "next/image"
 
 function PostBuilder({ value }) {
 
     const router = useRouter()
     const exploreEvent = () => {
-        router.push(`/${value.id}`)
+        router.push(`/${value._id}`)
     }
 
     return (
-        <div className="w-full">
+        <div className="max-w-screen">
 
-            <div className="flex flex-row p-4 m-4 rounded-lg bg-slate-300">
+            <div className="flex flex-row p-4 mb-4 rounded-lg bg-slate-300">
                 {/* image div */}
                 <div className="w-2/5 rounded-md mx-2">
-                    <img className="rounded-md" src={value?.image} alt="image" />
+                    <img className="rounded-md" src={value?.images} alt="image" />
+                    {/* <Image className="rounded-md" src={value?.images} width={400} height={400} alt="image" /> */}
                 </div>
 
                 {/* Content div */}

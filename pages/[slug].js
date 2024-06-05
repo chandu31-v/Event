@@ -1,16 +1,17 @@
 import { useState, useContext, useEffect } from "react"
 import PostPageBuilder from "@/components/postPageBuilder"
-import path from "path"
-import fs from "fs/promises"
-import Comments from "@/components/comment/commentBox"
-import CommentBlock from "@/components/comment/commentBlock"
+// import path from "path"
+// import fs from "fs/promises"
+// import Comments from "@/components/comment/commentBox"
+// import CommentBlock from "@/components/comment/commentBlock"
 import Context from "@/components/context/configureContext"
 import Notification from "@/components/notification"
 import Header from "@/components/header"
 
 function SlugList(props) {
 
-    const { data, comments, url, status } = props
+    //const { data, comments, url, status } = props
+    const {data} = props
     const [check, setCheck] = useState(true)
 
     const toggle = () => {
@@ -21,7 +22,7 @@ function SlugList(props) {
     const contextData = useContext(Context)
 
     useEffect(() => {
-        contextData.showNotification({ status: status, message: "error connectiong" })
+        contextData.showNotification({ status: "failed", message: "error connectiong" })
     }, [])
 
     //const comment = JSON.parse(comments)
@@ -48,13 +49,13 @@ function SlugList(props) {
                         <div className="flex justify-center w-full">
                             <button className="bg-green-500 px-4 rounded" onClick={toggle}>Comment</button>
                         </div>
-                        :
-                        <div className="w-1/2">
-                            <Comments url={url} />
-                            {comments?.map((comment) => {
-                                return <CommentBlock key={comment._id} name={comment.name} comment={comment.comment} />
-                            })}
-                        </div>
+                        :""
+                        // <div className="w-1/2">
+                        //     <Comments url={url} />
+                        //     {comments?.map((comment) => {
+                        //         return <CommentBlock key={comment._id} name={comment.name} comment={comment.comment} />
+                        //     })}
+                        // </div>
                 }
             </div>
             <div className="w-full">
@@ -70,39 +71,53 @@ export async function getServerSideProps(context) {
 
     const { query } = context
 
-    const filePath = path.join(process.cwd(), "data", "db.json")
-    const jsonData = await fs.readFile(filePath)
-    const data = JSON.parse(jsonData)
+    //local file
+    // const filePath = path.join(process.cwd(), "data", "db.json")
+    // const jsonData = await fs.readFile(filePath)
+    // const data = JSON.parse(jsonData)
 
+    //const url = query.slug
+    // const value = data.events.filter((val) => {
+    //     return url && val.id === url
+    // })
 
-    const url = query.slug
+    const id = query.slug
 
-    const value = data.events.filter((val) => {
-        return url && val.id === url
-    })
+    //fetch data based on id from mongo
+    let postData
+    try{
+        const response = await fetch(`http://localhost:3000/api/${id}`)
+        postData = await response.json()
+        if(postData===undefined){
+            postData=[]
+        }
+
+    }catch(e){
+        console.log(e)
+    }
 
     //fetch from api endpoint
-    let comments, comment, status = null
-    try {
-        comments = await fetch(`http://localhost:3000/api/${url}`)
-        comment = await comments.json()
-        if (comment.data === undefined) {
-            comment.data = []
-        }
-        status = comment.status
-    } catch (err) {
-        comment = {
-            data: []
-        }
-    }
+    // let comments, comment, status = null
+    // try {
+    //     comments = await fetch(`http://localhost:3000/api/${url}`)
+    //     comment = await comments.json()
+    //     if (comment.data === undefined) {
+    //         comment.data = []
+    //     }
+    //     status = comment.status
+    // } catch (err) {
+    //     comment = {
+    //         data: []
+    //     }
+    // }
 
     return (
         {
             props: {
-                data: value,
-                comments: comment.data,
-                url: url,
-                status
+                data: postData.data,
+                //comments: comment.data,
+                //url: url,
+                //status
             }
         }
     )
