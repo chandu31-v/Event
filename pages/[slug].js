@@ -88,7 +88,7 @@ export async function getServerSideProps(context) {
     try{
         //https://event-git-main-chandrashekars-projects.vercel.app/api/${id}
         //http://localhost:3000/api/${id}`
-        const response = await fetch(`http://localhost:3000/api/${id}`)
+        const response = await fetch(`https://event-git-main-chandrashekars-projects.vercel.app/api/${id}`)
         postData = await response.json()
         if(postData===undefined){
             postData=[]
