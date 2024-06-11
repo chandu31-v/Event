@@ -33,7 +33,7 @@ function EventPage(props) {
                 <div className="flex flex-wrap w-full mt-6 h-full">
                     {
                         data.length > 0 ?
-                            data.map((val) => {
+                            data?.map((val) => {
                                 return <div className="w-full min-[500px]:w-1/3 px-3 h-full" key={val._id}> <PostBuilder value={val} /> </div>
                             }) :
                             <div>No data found</div>
@@ -65,8 +65,8 @@ export async function getServerSideProps(context) {
 
     let featuredPosts
     try {
-        const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
-        //const featuredPostsResponse = await fetch("http://localhost:3000/api/isFeatured")
+        //const featuredPostsResponse = await fetch("https://event-git-main-chandrashekars-projects.vercel.app/api/isFeatured")
+        const featuredPostsResponse = await fetch("http://localhost:3000/api/isFeatured")
         featuredPosts = await featuredPostsResponse.json()
     } catch (e) {
         console.log(e)
@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
     if (featuredPosts === undefined) {
         featuredPosts = []
     } else {
-        featuredPosts = featuredPosts.data
+        featuredPosts = featuredPosts?.data
     }
 
     return (

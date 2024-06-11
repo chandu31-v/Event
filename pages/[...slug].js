@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import PostBuilder from "@/components/postBuilder"
 // import path from "path"
 // import fs from "fs/promises"
-import { useRouter } from "next/router"
+//import { useRouter } from "next/router"
 import { client } from "@/mongoDB/connect"
 import Header from "@/components/header"
 

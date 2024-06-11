@@ -48,9 +48,9 @@ export async function LoginFun(email, password) {
   try {
     const accountLogedIn = await signInWithEmailAndPassword(auth, email, password)
     const user = accountLogedIn.user
-    console.log(user)
+    return user
   } catch (error) {
-    console.log("error while logining", error)
+    throw new Error(error)
   }
 
 }

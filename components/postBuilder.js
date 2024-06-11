@@ -5,7 +5,7 @@ function PostBuilder({ value }) {
 
     const router = useRouter()
     const exploreEvent = () => {
-        router.push(`/${value._id}`)
+        router.push(`/${value?._id}`)
     }
 
     return (

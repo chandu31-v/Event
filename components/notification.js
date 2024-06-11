@@ -6,12 +6,11 @@ function Notification(){
     const contextData = useContext(Context)
 
     return(
-        <div className="flex w-full h-10 bg-slate-400">
-            <div className="w-1/3"><p>{contextData.notification?.status}</p></div>
-            <div className="w-1/3"><p>{contextData.notification?.message}</p></div>
+        <div className="flex w-52 h-10 bg-slate-400">
+            <div className="w-1/2"><p>{contextData.notification?.status}</p></div>
+            <div className="w-1/2"><p>{contextData.notification?.message}</p></div>
         </div>
     )
-
 }
 
 export default Notification
