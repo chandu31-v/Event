@@ -3,6 +3,7 @@ import '@/styles/globals.css'
 import {ContextProvider} from '@/components/context/configureContext'
 import { Provider } from 'react-redux'
 import store from '@/store/store'
+import {Analytics} from "@vercel/analytics"
 
 export default function App({ Component, pageProps }) {
 
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }) {
       <ContextProvider>
         <Provider store={store}>
         <Component {...pageProps} />
+        <Analytics />
         </Provider>
       </ContextProvider>
     </div>)
