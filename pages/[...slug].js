@@ -5,6 +5,7 @@ import PostBuilder from "@/components/postBuilder"
 //import { useRouter } from "next/router"
 import { client } from "@/mongoDB/connect"
 import Header from "@/components/header"
+import Loading from "@/components/loading"
 
 function AllSlugList(props) {
 
@@ -28,6 +29,7 @@ function AllSlugList(props) {
 
         return (
             <div className="flex flex-col max-w-screen min-h-screen bg-slate-400">
+                <Loading />
                 <div className="w-full">
                     <Header />
                 </div>
@@ -41,6 +43,7 @@ function AllSlugList(props) {
 
     return (
         <div className="flex flex-col items-center w-screen min-h-screen bg-slate-400">
+            <Loading />
             <div className="w-full">
                 <Header />
             </div>

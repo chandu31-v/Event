@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import {useRouter} from "next/router";
 import { useDispatch } from "react-redux";
 import { toggleLoginState } from "@/store/slice";
+import Loading from "@/components/loading";
 
 function Login() {
 
@@ -28,6 +29,7 @@ function Login() {
 
     return (<>
         <div className="max-w-screen h-full bg-slate-400">
+            <Loading />
             <div className="w-full">
                 <Header />
             </div>

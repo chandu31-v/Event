@@ -7,6 +7,8 @@ import Header from "@/components/header"
 import EventSignup from "@/components/eventSignup"
 import Notification from "@/components/notification"
 import Context from "@/components/context/configureContext"
+import Loading from "@/components/loading"
+
 
 function EventPage(props) {
 
@@ -15,6 +17,7 @@ function EventPage(props) {
 
     return (
         <div className="flex flex-col items-center max-w-screen min-h-screen bg-slate-400">
+            <Loading />
             <div className="w-full">
                 <Header />
             </div>

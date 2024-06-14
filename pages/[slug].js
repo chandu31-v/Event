@@ -7,6 +7,7 @@ import PostPageBuilder from "@/components/postPageBuilder"
 import Context from "@/components/context/configureContext"
 import Notification from "@/components/notification"
 import Header from "@/components/header"
+import Loading from "@/components/loading"
 
 function SlugList(props) {
 
@@ -36,12 +37,11 @@ function SlugList(props) {
     return (
 
         <div className="flex flex-col items-center max-w-screen bg-slate-400 min-h-screen">
-
+            <Loading />
             <div className="w-full">
                 <Header />
             </div>
 
-            <p className=" text-2xl font-bold">{data[0]?.title}</p>
             <PostPageBuilder value={data[0]} />
             <div className="flex justify-center w-full">
                 {

@@ -4,6 +4,7 @@ import Header from "@/components/header"
 // import path from "path"
 // import fs from "fs/promises"
 import { client } from "@/mongoDB/connect"
+import Loading from "@/components/loading"
 
 function AllEvent(props) {
 
@@ -44,6 +45,7 @@ function AllEvent(props) {
 
     return (
         <div className="flex flex-col max-w-screen min-h-screen bg-slate-400">
+            <Loading />
             <div className="w-full">
                 <Header />
             </div>
