@@ -7,9 +7,9 @@ function PostBuilder({ value }) {
     // const exploreEvent = () => {
     //     router.push(`/${value.id}`)
     // }
+    const login = useSelector((value)=>value.login)
 
     const bookTicket = ()=>{
-        const login = useSelector((value)=>value.login)
         if(login==="false" || login===null){
             router.route("/sigin")
         }else{
