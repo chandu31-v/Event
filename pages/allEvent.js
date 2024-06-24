@@ -5,12 +5,14 @@ import Header from "@/components/header"
 // import fs from "fs/promises"
 import { client } from "@/mongoDB/connect"
 import Loading from "@/components/loading"
+import styles from "../css/allevent.module.css"
 
 function AllEvent(props) {
 
     const titleRef = useRef(null)
     const dateRef = useRef(null)
     const [searchData, setSearchData] = useState(null)
+    const [paginationStart,setPaginationStart] = useState(1)
     const { data } = props
     let selectedData
 
@@ -43,6 +45,18 @@ function AllEvent(props) {
         setSearchData(null)
     }
 
+    const paginationClick = (e)=>{
+        if(e.target.textContent=="⏪"){
+            if(paginationStart>1){
+                setPaginationStart(paginationStart-1)
+            }
+        }else if(e.target.textContent=="⏩"){
+            setPaginationStart(paginationStart+1)
+        }else if(parseInt(e.target.textContent)>=1){
+            setPaginationStart(parseInt(e.target.textContent))
+        }
+    }
+
     return (
         <div className="flex flex-col max-w-screen min-h-screen bg-slate-400">
             <Loading />
@@ -60,13 +74,23 @@ function AllEvent(props) {
             <div className="flex flex-wrap w-full mt-8">
                 {
                     (!searchData) ?
-                        data.map((val) => {
+                        // slice the 10 values from start ,if page is 1 then from 1 to 1*10, if page 2, then 2 to 2*10
+                        data.slice((paginationStart-1)*10,paginationStart*10).map((val) => {
                             return <div className="w-full min-[500px]:w-1/3 p-3" key={val._id}> <PostBuilder value={val} /> </div>
                         }) :
                         searchData?.length > 0 ? searchData?.map((val) => {
                             return <div className="w-full min-[500px]:w-1/3 p-3" key={val._id}> <PostBuilder value={val} /> </div>
                         }) : <div className="flex justify-center w-full animate-bounce"><div> no data, Rendering back... </div></div>
                 }
+            </div>
+            <div className={styles.pagination} onClick={paginationClick}>
+                <div className={styles.pagination__value}>⏪</div>
+                {
+                    new Array(Math.ceil(data.length/10)).fill(0).map((_,i)=>{
+                        return <div key={i} className={styles.pagination__value}>{i+1}</div>
+                    })
+                }
+                <div className={styles.pagination__value}>⏩</div>
             </div>
         </div>
     )

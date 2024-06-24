@@ -43,26 +43,26 @@ function SlugList(props) {
             </div>
 
             <PostPageBuilder value={data[0]} />
-            <div className="flex justify-center w-full">
+            {/* <div className="flex justify-center w-full">
                 {
                     check ?
                         <div className="flex justify-center w-full">
                             <button className="bg-green-500 px-4 rounded" onClick={toggle}>Comment</button>
                         </div>
-                        :""
-                        // <div className="w-1/2">
-                        //     <Comments url={url} />
-                        //     {comments?.map((comment) => {
-                        //         return <CommentBlock key={comment._id} name={comment.name} comment={comment.comment} />
-                        //     })}
-                        // </div>
+                        :
+                        <div className="w-1/2">
+                            <Comments url={url} />
+                            {comments?.map((comment) => {
+                                return <CommentBlock key={comment._id} name={comment.name} comment={comment.comment} />
+                            })}
+                        </div>
                 }
-            </div>
-            <div className="w-full">
+            </div> */}
+            {/* <div className="w-full">
                 {
                     contextData.notification ? <Notification /> : null
                 }
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -88,8 +88,8 @@ export async function getServerSideProps(context) {
     try{
         //https://event-git-main-chandrashekars-projects.vercel.app/api/${id}
         //`http://localhost:3000/api/${id}`
-        const response = await fetch(`https://event-git-main-chandrashekars-projects.vercel.app/api/${id}`)
-        //const response = await fetch(`http://localhost:3000/api/${id}`)
+        //const response = await fetch(`https://event-git-main-chandrashekars-projects.vercel.app/api/${id}`)
+        const response = await fetch(`http://localhost:3000/api/${id}`)
         postData = await response.json()
         if(postData===undefined){
             postData=[]

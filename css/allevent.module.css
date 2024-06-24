@@ -1,0 +1,11 @@
+.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination__value{
+    border: 1px solid gray;
+    padding: 10px;
+    cursor: pointer;
+}
