@@ -14,7 +14,7 @@ try {
     });
 
 } catch (err) {
-    console.log(err)
+    console.log("error",err)
 }
 
 export {client}
